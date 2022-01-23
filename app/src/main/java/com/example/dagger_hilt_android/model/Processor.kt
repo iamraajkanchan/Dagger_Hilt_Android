@@ -1,4 +1,8 @@
 package com.example.dagger_hilt_android.model
 
-class Processor
-{}
+import javax.inject.Inject
+
+class Processor @Inject constructor()
+{
+
+}
