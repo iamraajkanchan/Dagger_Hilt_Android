@@ -4,7 +4,7 @@ import android.util.Log
 import com.example.dagger_hilt_android.utils.Utils
 import javax.inject.Inject
 
-class Battery(var cobalt : Cobalt , var lithium : Lithium)
+class Battery(private var cobalt : Cobalt , private var lithium : Lithium)
 {
     init
     {
