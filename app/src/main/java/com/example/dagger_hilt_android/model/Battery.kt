@@ -4,10 +4,10 @@ import android.util.Log
 import com.example.dagger_hilt_android.utils.Utils
 import javax.inject.Inject
 
-class Battery @Inject constructor(var cobalt : Cobalt , var lithium : Lithium)
+class Battery(private var cobalt : Cobalt , private var lithium : Lithium)
 {
     init
     {
-        Log.d(Utils.TAG , "Battery :: ")
+        Log.d(Utils.TAG , "Battery :: $this, Cobalt :: $cobalt, Lithium :: $lithium")
     }
 }

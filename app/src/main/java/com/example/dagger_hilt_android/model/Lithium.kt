@@ -4,7 +4,7 @@ import android.util.Log
 import com.example.dagger_hilt_android.utils.Utils
 import javax.inject.Inject
 
-class Lithium @Inject constructor()
+class Lithium
 {
     init
     {
