@@ -12,7 +12,7 @@ import javax.inject.Inject
 class MainActivity : AppCompatActivity()
 {
     @Inject
-    private lateinit var mobile : Mobile
+    lateinit var mobile : Mobile
     override fun onCreate(savedInstanceState : Bundle?)
     {
         super.onCreate(savedInstanceState)
