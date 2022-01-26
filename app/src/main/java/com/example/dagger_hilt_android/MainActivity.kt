@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity()
     {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        Log.d(Utils.TAG , "Mobile : $samsung")
-        Log.d(Utils.TAG , "Mobile : $apple")
+        Log.d(Utils.TAG , "Samsung : $samsung")
+        Log.d(Utils.TAG , "Apple : $apple")
     }
 }
