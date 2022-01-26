@@ -1,13 +1,13 @@
 package com.example.dagger_hilt_android.model
 
-class Mobile
-{
-    private var battery : Battery ?= null
-    private var processor : Processor ?= null
+import android.util.Log
+import com.example.dagger_hilt_android.utils.Utils
+import javax.inject.Inject
 
+class Mobile @Inject constructor(var battery : Battery , var processor : Processor)
+{
     init
     {
-        battery = Battery()
-        processor = Processor()
+        Log.d(Utils.TAG , "Mobile :: $this, Battery :: $battery, Processor :: $processor")
     }
 }
