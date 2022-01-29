@@ -23,5 +23,4 @@ class PostViewModel @Inject constructor(private val postRepository : PostReposit
         val posts = postRepository.getPost()
         _postMutableLiveData.postValue(posts)
     }
-
 }
