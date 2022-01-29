@@ -6,18 +6,17 @@ import com.example.dagger_hilt_android.model.Lithium
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ActivityComponent
+import dagger.hilt.android.scopes.ActivityScoped
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
 @Module
-@InstallIn(SingletonComponent::class)
-object BatteryModule
+@InstallIn(ActivityComponent::class)
+object ActivityModule
 {
     @Provides
-    fun getCobalt() : Cobalt
-    {
-        return Cobalt()
-    }
+    fun getCobalt() : Cobalt = Cobalt()
 
     @Provides
     fun getLithium() : Lithium
@@ -27,11 +26,8 @@ object BatteryModule
         return lithium
     }
 
-    @Singleton
     @Provides
-    fun getBattery(cobalt : Cobalt , lithium : Lithium) : Battery
-    {
-        return Battery(cobalt , lithium)
-    }
+    @ActivityScoped
+    fun getBattery(cobalt : Cobalt , lithium : Lithium) : Battery = Battery(cobalt , lithium)
 
 }

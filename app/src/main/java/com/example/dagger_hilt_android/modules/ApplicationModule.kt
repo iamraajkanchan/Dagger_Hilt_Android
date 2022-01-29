@@ -7,28 +7,21 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Named
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object SnapdragonModule
+object ApplicationModule
 {
     @Provides
-    fun getProcessor(snapdragon : Snapdragon) : Processor
-    {
-        return snapdragon
-    }
+    @Singleton
+    fun getProcessor(snapdragon : Snapdragon) : Processor = snapdragon
 
     @Provides
     @Named("core")
-    fun getCore() : Int
-    {
-        return 8
-    }
+    fun getCore() : Int = 8
 
     @Provides
     @Named("clockSpeed")
-    fun getClockSpeed() : Int
-    {
-        return 12
-    }
+    fun getClockSpeed() : Int = 12
 }
