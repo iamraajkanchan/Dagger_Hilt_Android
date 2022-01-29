@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class PostViewModel @Inject constructor(val postRepository : PostRepository) : ViewModel()
+class PostViewModel @Inject constructor(private val postRepository : PostRepository) : ViewModel()
 {
     private val _postMutableLiveData : MutableLiveData<List<PostItem>> = MutableLiveData()
     private val postLiveData : LiveData<List<PostItem>> = _postMutableLiveData
@@ -21,7 +21,7 @@ class PostViewModel @Inject constructor(val postRepository : PostRepository) : V
 
     fun getPost() = viewModelScope.launch(Dispatchers.IO) {
         val posts = postRepository.getPost()
-        _postMutableLiveData.value = posts
+        _postMutableLiveData.postValue(posts)
     }
 
 }
