@@ -19,7 +19,7 @@ import javax.inject.Inject
 class PostViewModel @Inject constructor(private val postRepository : PostRepository) : ViewModel()
 {
     /**
-     * postLiveData is used to retrieve data from
+     * postLiveData is used to retrieve data from Room Database
      * */
     val postLiveData : LiveData<List<Post>> = postRepository.loadAll()
 
