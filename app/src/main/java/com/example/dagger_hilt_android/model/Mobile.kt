@@ -1,14 +1,10 @@
 package com.example.dagger_hilt_android.model
 
-class Mobile
-{
-    /* This is called field injection using Manual dependency method */
-    private var battery : Battery ?= null
-    private var processor : Processor ?= null
+/* This is an example of Manual constructor injection. */
+class Mobile(private val battery: Battery, private val processor: Processor) {
 
-    init
-    {
-        battery = Battery()
-        processor = Processor()
+    fun print() {
+        battery.printBatteryName()
+        processor.printProcessorName()
     }
 }
