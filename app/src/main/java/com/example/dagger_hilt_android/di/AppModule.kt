@@ -14,12 +14,12 @@ object AppModule {
     @Provides
     @Singleton
     @BName
-    fun provideBatteryName(batteryName: String) = "Samsung Battery"
+    fun provideBatteryName() = "Samsung Battery"
 
     @Provides
     @Singleton
     @PName
-    fun provideProcessorName(processorName: String) = "SnapDragon 650"
+    fun provideProcessorName() = "SnapDragon 650"
 }
 
 @Qualifier
