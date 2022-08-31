@@ -3,6 +3,9 @@ package com.example.dagger_hilt_android.ui
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.dagger_hilt_android.R
+import com.example.dagger_hilt_android.di.AppModule
+import com.example.dagger_hilt_android.di.BName
+import com.example.dagger_hilt_android.di.PName
 import com.example.dagger_hilt_android.model.*
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject

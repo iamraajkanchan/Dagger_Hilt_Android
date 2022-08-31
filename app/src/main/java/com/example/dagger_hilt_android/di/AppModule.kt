@@ -13,18 +13,18 @@ object AppModule {
 
     @Provides
     @Singleton
-    @MName
-    fun provideMobileName() = "5500 mAh Samsung Battery"
+    @BName
+    fun provideBatteryName(batteryName: String) = "Samsung Battery"
 
     @Provides
     @Singleton
     @PName
-    fun provideProcessorName() = "Snapdragon 750"
+    fun provideProcessorName(processorName: String) = "SnapDragon 650"
 }
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
-annotation class MName
+annotation class BName
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
