@@ -20,6 +20,15 @@ object AppModule {
     @Singleton
     @PName
     fun provideProcessorName() = "SnapDragon 650"
+
+    @Provides
+    @Singleton
+    @CName
+    fun provideCustomerName() = "Mithil Mehta"
+
+    @Provides
+    @Singleton
+    fun provideCustomerAge() = 4
 }
 
 @Qualifier
@@ -29,3 +38,7 @@ annotation class BName
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
 annotation class PName
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class CName
