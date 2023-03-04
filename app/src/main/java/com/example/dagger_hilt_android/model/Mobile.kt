@@ -5,14 +5,15 @@ import javax.inject.Inject
 /**
  * This is an example of Dagger Constructor Injection
  *
- * Note: As both the parameters of [Mobile], [Battery] and [Processor] is not a part of Hilt System,
- * we can use the modifier private
+ * Note: As the parameters of [Mobile]: [Battery] [Processor] and [Customer] is not a part of Hilt System,
+ * so we can use the access modifier 'private' in the constructor
  *
  * */
 
-class Mobile @Inject constructor(private val battery: Battery, private val processor: Processor) {
+class Mobile @Inject constructor(private val battery: Battery, private val processor: Processor, private val customer: Customer) {
 
     fun print() {
+        customer.printCustomerDetails()
         battery.printBatteryName()
         processor.printProcessorName()
     }
