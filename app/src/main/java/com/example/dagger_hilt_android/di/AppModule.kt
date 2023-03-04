@@ -24,7 +24,7 @@ object AppModule {
     @Provides
     @Singleton
     @CName
-    fun provideCustomerName() = "Mithil Mehta"
+    fun provideCustomerName() = "Captain America"
 
     @Provides
     @Singleton
