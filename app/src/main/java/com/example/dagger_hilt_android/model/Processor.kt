@@ -1,6 +1,6 @@
 package com.example.dagger_hilt_android.model
 
-import com.example.dagger_hilt_android.di.PName
+import com.example.dagger_hilt_android.di.ProcessorName
 import com.example.dagger_hilt_android.utils.TAG
 import javax.inject.Inject
 
@@ -11,7 +11,7 @@ import javax.inject.Inject
  * @param name is used in Hilt system you cannot use private modifier.
  *
  * */
-class Processor @Inject constructor(@PName val name: String) {
+class Processor @Inject constructor(@ProcessorName val name: String) {
     fun printProcessorName() {
         println("$TAG :: Processor :: Processor Name: $name")
     }

@@ -13,32 +13,50 @@ object AppModule {
 
     @Provides
     @Singleton
-    @BName
+    @BatteryName
     fun provideBatteryName() = "Samsung Battery"
 
     @Provides
     @Singleton
-    @PName
+    @ProcessorName
     fun provideProcessorName() = "SnapDragon 650"
 
     @Provides
     @Singleton
-    @CName
-    fun provideCustomerName() = "Captain America"
+    @CustomerName
+    fun provideCustomerName() = "John Doe"
 
     @Provides
     @Singleton
     fun provideCustomerAge() = 4
+
+    @Provides
+    @Singleton
+    @MobileName
+    fun provideMobileName() = "OnePlus"
+
+    @Provides
+    @Singleton
+    @RetailerName
+    fun provideRetailerName() = "Corporation of China"
 }
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
-annotation class BName
+annotation class BatteryName
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
-annotation class PName
+annotation class ProcessorName
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
-annotation class CName
+annotation class CustomerName
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class RetailerName
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class MobileName

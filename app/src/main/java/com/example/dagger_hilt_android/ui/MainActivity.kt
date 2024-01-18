@@ -25,6 +25,9 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var customer: Customer
 
+    @Inject
+    lateinit var retailer: Retailer
+
     /**
      * onCreate callback method of the Activity
      * */
@@ -32,5 +35,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         mobile.print()
+        customer.printCustomerDetails()
+        retailer.printRetailerDetails()
     }
 }

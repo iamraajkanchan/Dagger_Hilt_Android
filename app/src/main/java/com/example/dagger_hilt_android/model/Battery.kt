@@ -1,6 +1,6 @@
 package com.example.dagger_hilt_android.model
 
-import com.example.dagger_hilt_android.di.BName
+import com.example.dagger_hilt_android.di.BatteryName
 import com.example.dagger_hilt_android.utils.TAG
 import javax.inject.Inject
 
@@ -10,7 +10,7 @@ import javax.inject.Inject
  * Warning: As the argument of [Battery]
  * @param name is used in Hilt System you cannot use private modifier
  * */
-class Battery @Inject constructor(@BName val name: String) {
+class Battery @Inject constructor(@BatteryName val name: String) {
     fun printBatteryName() {
         println("$TAG :: Battery :: Battery Name: $name")
     }

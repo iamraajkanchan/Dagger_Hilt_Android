@@ -1,5 +1,6 @@
 package com.example.dagger_hilt_android.model
 
+import com.example.dagger_hilt_android.di.MobileName
 import javax.inject.Inject
 
 /**
@@ -10,11 +11,17 @@ import javax.inject.Inject
  *
  * */
 
-class Mobile @Inject constructor(private val battery: Battery, private val processor: Processor, private val customer: Customer) {
+class Mobile @Inject constructor(
+    @MobileName val mobileName: String,
+    private val battery: Battery,
+    private val processor: Processor,
+    private val customer: Customer
+) {
 
     fun print() {
         customer.printCustomerDetails()
         battery.printBatteryName()
         processor.printProcessorName()
     }
+
 }
