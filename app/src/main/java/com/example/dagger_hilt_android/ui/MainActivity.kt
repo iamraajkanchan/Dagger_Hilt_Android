@@ -2,10 +2,15 @@ package com.example.dagger_hilt_android.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.dagger_hilt_android.R
-import com.example.dagger_hilt_android.model.*
+import android.view.View
+import android.widget.Toast
+import androidx.activity.viewModels
+import androidx.lifecycle.lifecycleScope
+import com.example.dagger_hilt_android.databinding.ActivityMainBinding
+import com.example.dagger_hilt_android.retrofit.AlbumResponseState
+import com.example.dagger_hilt_android.viewModel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
+import kotlinx.coroutines.flow.collectLatest
 
 /**
  * [MainActivity] is the main screen of the application.
@@ -15,27 +20,43 @@ import javax.inject.Inject
  * if you are going to use the variable in Hilt System
  *
  * */
-
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    @Inject
-    lateinit var mobile: Mobile
+    private lateinit var binding: ActivityMainBinding
 
-    @Inject
-    lateinit var customer: Customer
-
-    @Inject
-    lateinit var retailer: Retailer
+    private val viewModel: MainViewModel by viewModels()
 
     /**
      * onCreate callback method of the Activity
      * */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        mobile.print()
-        customer.printCustomerDetails()
-        retailer.printRetailerDetails()
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        getAlbums()
+    }
+
+    private fun getAlbums() {
+        lifecycleScope.launchWhenCreated {
+            viewModel.getAlbums()
+            viewModel.albumState.collectLatest { state ->
+                when (state) {
+                    is AlbumResponseState.Loading -> binding.progressBar.visibility = View.VISIBLE
+                    is AlbumResponseState.Success -> {
+                        Toast.makeText(this@MainActivity, state.message, Toast.LENGTH_LONG).show()
+                        val albums = state.albums
+                        for (album in albums) {
+                            println(album.title)
+                        }
+                    }
+
+                    is AlbumResponseState.Failed -> {
+                        Toast.makeText(this@MainActivity, state.error.message, Toast.LENGTH_LONG)
+                            .show()
+                    }
+                }
+            }
+        }
     }
 }

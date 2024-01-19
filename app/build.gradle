@@ -6,12 +6,12 @@ plugins {
 }
 
 android {
-    compileSdk 31
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.example.dagger_hilt_android"
         minSdk 23
-        targetSdk 31
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 
@@ -69,4 +69,13 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-reactivestreams:$lifecycle_version"
     /* optional - Test helpers for LiveData */
     testImplementation "androidx.arch.core:core-testing:$arch_version"
+
+    /* ViewModel Scope */
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0"
+
+    /* Lifecycle Scope */
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.4.0"
+
+    /* Dependency to use viewModels() utility */
+    implementation 'androidx.fragment:fragment-ktx:1.6.2'
 }
