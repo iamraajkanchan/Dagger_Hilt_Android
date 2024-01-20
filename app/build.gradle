@@ -71,10 +71,10 @@ dependencies {
     testImplementation "androidx.arch.core:core-testing:$arch_version"
 
     /* ViewModel Scope */
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0"
 
     /* Lifecycle Scope */
-    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.4.0"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.7.0"
 
     /* Dependency to use viewModels() utility */
     implementation 'androidx.fragment:fragment-ktx:1.6.2'
@@ -98,4 +98,7 @@ dependencies {
 
     // optional - Paging 3 Integration
     implementation "androidx.room:room-paging:$room_version"
+
+    // Use this dependency to use Dagger-Hilt with Room
+    implementation "androidx.room:room-ktx:2.6.1"
 }
