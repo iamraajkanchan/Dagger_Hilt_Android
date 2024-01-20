@@ -9,6 +9,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.example.dagger_hilt_android.databinding.ActivityMainBinding
+import com.example.dagger_hilt_android.model.Retailer
 import com.example.dagger_hilt_android.retrofit.AlbumResponseState
 import com.example.dagger_hilt_android.viewModel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -17,6 +18,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.newCoroutineContext
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
 /**
  * [MainActivity] is the main screen of the application.
@@ -30,7 +32,8 @@ import kotlinx.coroutines.withContext
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-
+    // Used this object for demonstrating the feature of Dagger Hilt
+    @Inject lateinit var retailer: Retailer
     private val viewModel: MainViewModel by viewModels()
 
     /**
@@ -40,6 +43,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        retailer.printRetailerDetails()
         getAlbums()
     }
 

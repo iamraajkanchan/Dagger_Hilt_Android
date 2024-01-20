@@ -1,10 +1,12 @@
 package com.example.dagger_hilt_android.di
 
+import com.example.dagger_hilt_android.retrofit.ApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import javax.inject.Qualifier
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 @Module
@@ -13,50 +15,17 @@ object AppModule {
 
     @Provides
     @Singleton
-    @BatteryName
-    fun provideBatteryName() = "Samsung Battery"
+    fun provideRetrofit(): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl("https://jsonplaceholder.typicode.com/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+    }
+
 
     @Provides
     @Singleton
-    @ProcessorName
-    fun provideProcessorName() = "SnapDragon 650"
-
-    @Provides
-    @Singleton
-    @CustomerName
-    fun provideCustomerName() = "John Doe"
-
-    @Provides
-    @Singleton
-    fun provideCustomerAge() = 4
-
-    @Provides
-    @Singleton
-    @MobileName
-    fun provideMobileName() = "OnePlus"
-
-    @Provides
-    @Singleton
-    @RetailerName
-    fun provideRetailerName() = "Corporation of China"
+    fun provideApiService(retrofit: Retrofit): ApiService {
+        return retrofit.create(ApiService::class.java)
+    }
 }
-
-@Qualifier
-@Retention(AnnotationRetention.BINARY)
-annotation class BatteryName
-
-@Qualifier
-@Retention(AnnotationRetention.BINARY)
-annotation class ProcessorName
-
-@Qualifier
-@Retention(AnnotationRetention.BINARY)
-annotation class CustomerName
-
-@Qualifier
-@Retention(AnnotationRetention.BINARY)
-annotation class RetailerName
-
-@Qualifier
-@Retention(AnnotationRetention.BINARY)
-annotation class MobileName

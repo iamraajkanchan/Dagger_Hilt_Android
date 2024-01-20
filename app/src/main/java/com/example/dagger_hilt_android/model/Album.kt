@@ -1,3 +1,12 @@
 package com.example.dagger_hilt_android.model
 
-data class Album(val userId: Int, val id: Int, val title: String)
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "album")
+data class Album(
+    @PrimaryKey(autoGenerate = false)
+    val id: Int,
+    val userId: Int,
+    val title: String
+)
