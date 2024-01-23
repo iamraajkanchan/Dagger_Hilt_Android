@@ -34,24 +34,31 @@ class AlbumAdapter(private val albums: MutableList<Album>? = null) :
     }
 
     override fun onBindViewHolder(holder: AlbumViewHolder, position: Int) {
-        context?.let { holder.bind(it, albums?.get(position)) }
-    }
+        context?.let { context ->
+            with(holder.binding) {
+                with(albums?.get(position)) {
+                    this@with?.let { album ->
+                        tvAlbumId.text = "${album.id}"
+                        tvAlbumTitle.text = album.title
+                        cvAlbumIdContainer.setOnClickListener {
+                            Intent(context, AlbumDetailActivity::class.java).apply {
+                                putExtra(AlbumDetailActivity.ALBUM_DETAIL_EXTRA, album)
+                                context.startActivity(this)
+                            }
+                        }
+                        imgDelete.setOnClickListener {
 
-    override fun getItemCount(): Int = albums?.size ?: 0
-
-    class AlbumViewHolder(private val binding: RecyclerItemAlbumBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-        fun bind(context: Context, album: Album?) {
-            binding.tvAlbumId.text = "${album?.id}"
-            binding.tvAlbumTitle.text = album?.title
-            binding.cvAlbumIdContainer.setOnClickListener {
-                Intent(context, AlbumDetailActivity::class.java).apply {
-                    putExtra(AlbumDetailActivity.ALBUM_DETAIL_EXTRA, album)
-                    context.startActivity(this)
+                        }
+                    }
                 }
             }
         }
     }
+
+    override fun getItemCount(): Int = albums?.size ?: 0
+
+    class AlbumViewHolder(val binding: RecyclerItemAlbumBinding) :
+        RecyclerView.ViewHolder(binding.root)
 
     // AlbumCallback is used when you are trying to manipulate the list of albums
     // eg: addition, removal, sorting etc
