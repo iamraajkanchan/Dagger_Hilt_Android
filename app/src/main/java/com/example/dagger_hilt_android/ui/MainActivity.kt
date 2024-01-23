@@ -10,7 +10,9 @@ import androidx.activity.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.recyclerview.widget.RecyclerView
 import com.example.dagger_hilt_android.adapter.AlbumAdapter
+import com.example.dagger_hilt_android.adapter.AlbumAdapterInterface
 import com.example.dagger_hilt_android.databinding.ActivityMainBinding
 import com.example.dagger_hilt_android.model.Album
 import com.example.dagger_hilt_android.model.Retailer
@@ -30,7 +32,7 @@ import javax.inject.Inject
  *
  * */
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), AlbumAdapterInterface {
 
     private lateinit var binding: ActivityMainBinding
 
@@ -39,8 +41,8 @@ class MainActivity : AppCompatActivity() {
     lateinit var retailer: Retailer
     private lateinit var adapter: AlbumAdapter
     private var albums: MutableList<Album> = emptyList<Album>().toMutableList()
-    private val handler = Handler(Looper.getMainLooper())
     private val viewModel: MainViewModel by viewModels()
+    private var scrollYPosition = 0
 
     /**
      * onCreate callback method of the Activity
@@ -71,7 +73,7 @@ class MainActivity : AppCompatActivity() {
                                 rvAlbums.visibility = View.VISIBLE
                             }
                             albums = state.albums.toMutableList()
-                            adapter = AlbumAdapter(albums)
+                            adapter = AlbumAdapter(viewModel, albums, this@MainActivity)
                             binding.rvAlbums.adapter = adapter
                         }
 
@@ -90,10 +92,17 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-        handler.postDelayed({
-            albums.add(Album(101, 10245, "Taylor Swift Red"))
-            adapter.setAlbums(albums)
-            adapter.notifyItemInserted(albums.size - 1)
-        }, 60 * 60 * 100 * 2)
+        // Todo - Can't able to retain position of recycler view when an item from the recycler view is delted.
+        binding.rvAlbums.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                scrollYPosition = binding.rvAlbums.scrollY
+            }
+        })
+    }
+
+    override fun onItemDeleted(position: Int) {
+        binding.rvAlbums.scrollToPosition(scrollYPosition)
+        adapter.notifyItemRemoved(position)
     }
 }

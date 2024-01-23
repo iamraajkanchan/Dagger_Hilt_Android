@@ -2,6 +2,7 @@ package com.example.dagger_hilt_android.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.dagger_hilt_android.model.Album
 import com.example.dagger_hilt_android.retrofit.AlbumResponseState
 import com.example.dagger_hilt_android.retrofit.ApiService
 import com.example.dagger_hilt_android.room.AlbumDao
@@ -38,6 +39,12 @@ class MainViewModel @Inject constructor(
             } else {
                 _albumState.value = AlbumResponseState.Failed(Exception("No Response Found"))
             }
+        }
+    }
+
+    fun deleteAlbum(album: Album) {
+        viewModelScope.launch(Dispatchers.IO) {
+            albumDao.deleteAlbum(album)
         }
     }
 }

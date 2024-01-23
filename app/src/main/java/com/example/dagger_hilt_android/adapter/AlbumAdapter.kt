@@ -9,8 +9,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.dagger_hilt_android.databinding.RecyclerItemAlbumBinding
 import com.example.dagger_hilt_android.model.Album
 import com.example.dagger_hilt_android.ui.AlbumDetailActivity
+import com.example.dagger_hilt_android.viewModel.MainViewModel
 
-class AlbumAdapter(private val albums: MutableList<Album>? = null) :
+class AlbumAdapter(
+    private val viewModel: MainViewModel,
+    private val albums: MutableList<Album>? = null,
+    private val albumInterface: AlbumAdapterInterface
+) :
     RecyclerView.Adapter<AlbumAdapter.AlbumViewHolder>(), AutoUpdatableAdapter {
 
     /*
@@ -47,7 +52,9 @@ class AlbumAdapter(private val albums: MutableList<Album>? = null) :
                             }
                         }
                         imgDelete.setOnClickListener {
-
+                            viewModel.deleteAlbum(album)
+                            albumInterface.onItemDeleted(position)
+                            notifyItemRemoved(position)
                         }
                     }
                 }

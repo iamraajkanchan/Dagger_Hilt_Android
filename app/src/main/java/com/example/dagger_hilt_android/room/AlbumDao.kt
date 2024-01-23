@@ -1,6 +1,7 @@
 package com.example.dagger_hilt_android.room
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -14,4 +15,7 @@ interface AlbumDao {
 
     @Insert(Album::class, onConflict = OnConflictStrategy.IGNORE)
     fun insertAlbumInDatabase(album: List<Album>)
+
+    @Delete
+    suspend fun deleteAlbum(album: Album)
 }
