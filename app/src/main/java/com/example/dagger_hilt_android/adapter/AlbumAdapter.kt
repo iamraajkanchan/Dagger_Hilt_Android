@@ -1,13 +1,16 @@
 package com.example.dagger_hilt_android.adapter
 
+import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.dagger_hilt_android.databinding.RecyclerItemAlbumBinding
 import com.example.dagger_hilt_android.model.Album
+import com.example.dagger_hilt_android.ui.AlbumDetailActivity
 
-class AlbumAdapter(private val albums: MutableList<Album>) :
+class AlbumAdapter(private val albums: MutableList<Album>? = null) :
     RecyclerView.Adapter<AlbumAdapter.AlbumViewHolder>(), AutoUpdatableAdapter {
 
     /*
@@ -15,33 +18,43 @@ class AlbumAdapter(private val albums: MutableList<Album>) :
         autoNotify(oldValue, newValue) { old, new -> old.id == new.id }
     }
     */
-
-    fun updateAlbums(newAlbums: List<Album>) {
-        val diffResult = DiffUtil.calculateDiff(AlbumCallback(albums, newAlbums))
-        albums.clear()
-        albums.addAll(newAlbums)
+    var context: Context? = null
+    fun setAlbums(newAlbums: List<Album>) {
+        val diffResult = DiffUtil.calculateDiff(AlbumCallback(albums ?: emptyList(), newAlbums))
+        albums?.clear()
+        albums?.addAll(newAlbums)
         diffResult.dispatchUpdatesTo(this)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlbumViewHolder {
         val binding =
             RecyclerItemAlbumBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        context = parent.context
         return AlbumViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: AlbumViewHolder, position: Int) =
-        holder.bind(albums[position])
+    override fun onBindViewHolder(holder: AlbumViewHolder, position: Int) {
+        context?.let { holder.bind(it, albums?.get(position)) }
+    }
 
-    override fun getItemCount(): Int = albums.size
+    override fun getItemCount(): Int = albums?.size ?: 0
 
     class AlbumViewHolder(private val binding: RecyclerItemAlbumBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(album: Album) {
-            binding.tvAlbumId.text = "${album.id}"
-            binding.tvAlbumTitle.text = album.title
+        fun bind(context: Context, album: Album?) {
+            binding.tvAlbumId.text = "${album?.id}"
+            binding.tvAlbumTitle.text = album?.title
+            binding.cvAlbumIdContainer.setOnClickListener {
+                Intent(context, AlbumDetailActivity::class.java).apply {
+                    putExtra(AlbumDetailActivity.ALBUM_DETAIL_EXTRA, album)
+                    context.startActivity(this)
+                }
+            }
         }
     }
 
+    // AlbumCallback is used when you are trying to manipulate the list of albums
+    // eg: addition, removal, sorting etc
     class AlbumCallback(private val oldAlbums: List<Album>, private val newAlbums: List<Album>) :
         DiffUtil.Callback() {
         override fun getOldListSize(): Int = oldAlbums.size

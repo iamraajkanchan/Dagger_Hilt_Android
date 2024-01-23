@@ -78,7 +78,7 @@ class AlbumManagerTest {
         // Act
         val album = albumManager.getPreviousAlbum()
         // Assert
-        assertEquals("Camilla Cabello Collections", album.title)
+        assertEquals("Camilla Cabello Album", album.title)
     }
 
     @Test

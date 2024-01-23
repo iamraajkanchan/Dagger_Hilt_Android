@@ -2,15 +2,17 @@ package com.example.dagger_hilt_android.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dagger_hilt_android.adapter.AlbumAdapter
 import com.example.dagger_hilt_android.databinding.ActivityMainBinding
+import com.example.dagger_hilt_android.model.Album
 import com.example.dagger_hilt_android.model.Retailer
 import com.example.dagger_hilt_android.retrofit.AlbumResponseState
 import com.example.dagger_hilt_android.viewModel.MainViewModel
@@ -35,6 +37,9 @@ class MainActivity : AppCompatActivity() {
     // Used this object for demonstrating the feature of Dagger Hilt
     @Inject
     lateinit var retailer: Retailer
+    private lateinit var adapter: AlbumAdapter
+    private var albums: MutableList<Album> = emptyList<Album>().toMutableList()
+    private val handler = Handler(Looper.getMainLooper())
     private val viewModel: MainViewModel by viewModels()
 
     /**
@@ -65,7 +70,9 @@ class MainActivity : AppCompatActivity() {
                                 progressBar.visibility = View.GONE
                                 rvAlbums.visibility = View.VISIBLE
                             }
-                            binding.rvAlbums.adapter = AlbumAdapter(state.albums)
+                            albums = state.albums.toMutableList()
+                            adapter = AlbumAdapter(albums)
+                            binding.rvAlbums.adapter = adapter
                         }
 
                         is AlbumResponseState.Failed -> {
@@ -83,5 +90,10 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+        handler.postDelayed({
+            albums.add(Album(101, 10245, "Taylor Swift Red"))
+            adapter.setAlbums(albums)
+            adapter.notifyItemInserted(albums.size - 1)
+        }, 60 * 60 * 100 * 2)
     }
 }
