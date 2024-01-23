@@ -24,7 +24,7 @@ import org.junit.runner.RunWith
 class MainActivityTest {
 
     @get:Rule
-    val activityScenarioRule = activityScenarioRule<MainActivity>()
+    var activityScenarioRule = activityScenarioRule<MainActivity>()
 
     @Test
     fun albumRecyclerViewHasAParticularAlbum() {
