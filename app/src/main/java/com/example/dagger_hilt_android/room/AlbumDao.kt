@@ -13,8 +13,12 @@ interface AlbumDao {
     @Query("SELECT * FROM albums")
     fun getAlbumsFromDatabase(): Flow<List<Album>>
 
+    // Note: Do not use the OnConflictStrategy.ABORT. You application will crash abnormally and you will have no idea why it happened.
     @Insert(Album::class, onConflict = OnConflictStrategy.IGNORE)
-    fun insertAlbumInDatabase(album: List<Album>)
+    fun insertAlbumInDatabase(albums: List<Album>)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertSingleAlbumInDatabase(album: Album)
 
     @Delete
     suspend fun deleteAlbum(album: Album)

@@ -2,8 +2,6 @@ package com.example.dagger_hilt_android.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -99,6 +97,9 @@ class MainActivity : AppCompatActivity(), AlbumAdapterInterface {
                 scrollYPosition = binding.rvAlbums.scrollY
             }
         })
+        binding.fabAddAlbum.setOnClickListener {
+            AddAlbumDialog(this@MainActivity, viewModel).show()
+        }
     }
 
     override fun onItemDeleted(position: Int) {

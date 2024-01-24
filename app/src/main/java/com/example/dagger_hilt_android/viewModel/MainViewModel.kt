@@ -42,6 +42,12 @@ class MainViewModel @Inject constructor(
         }
     }
 
+    fun addAlbum(album: Album) {
+        viewModelScope.launch(Dispatchers.IO) {
+            albumDao.insertSingleAlbumInDatabase(album)
+        }
+    }
+
     fun deleteAlbum(album: Album) {
         viewModelScope.launch(Dispatchers.IO) {
             albumDao.deleteAlbum(album)
